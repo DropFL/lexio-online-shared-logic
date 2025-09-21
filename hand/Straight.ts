@@ -61,7 +61,7 @@ export default class Straight extends Made {
 
 const isNormalStraight = (sortedTiles: Tile[]): boolean => {
   for (let i = 0; i < sortedTiles.length - 1; i++) {
-    if (sortedTiles[i + 1].number - sortedTiles[i].number !== 1) {
+    if (sortedTiles[i].number - sortedTiles[i + 1].number !== 1) {
       return false;
     }
   }
@@ -70,30 +70,30 @@ const isNormalStraight = (sortedTiles: Tile[]): boolean => {
 
 const isMountain = (sortedTiles: Tile[], topNumber: number): boolean => {
   return (
-    sortedTiles[0].number === topNumber - 3 &&
-    sortedTiles[1].number === topNumber - 2 &&
+    sortedTiles[0].number === 1 &&
+    sortedTiles[1].number === topNumber &&
     sortedTiles[2].number === topNumber - 1 &&
-    sortedTiles[3].number === topNumber &&
-    sortedTiles[4].number === 1
+    sortedTiles[3].number === topNumber - 2 &&
+    sortedTiles[4].number === topNumber - 3
   );
 };
 
 const isBackStraightFrom2 = (sortedTiles: Tile[]): boolean => {
   return (
-    sortedTiles[0].number === 3 &&
-    sortedTiles[1].number === 4 &&
+    sortedTiles[0].number === 2 &&
+    sortedTiles[1].number === 6 &&
     sortedTiles[2].number === 5 &&
-    sortedTiles[3].number === 6 &&
-    sortedTiles[4].number === 2
+    sortedTiles[3].number === 4 &&
+    sortedTiles[4].number === 3
   );
 };
 
 const isBackStraightFrom1 = (sortedTiles: Tile[]): boolean => {
   return (
-    sortedTiles[0].number === 3 &&
-    sortedTiles[1].number === 4 &&
+    sortedTiles[0].number === 2 &&
+    sortedTiles[1].number === 1 &&
     sortedTiles[2].number === 5 &&
-    sortedTiles[3].number === 1 &&
-    sortedTiles[4].number === 2
+    sortedTiles[3].number === 4 &&
+    sortedTiles[4].number === 3
   );
 };
