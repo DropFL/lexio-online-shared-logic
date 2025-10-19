@@ -13,25 +13,25 @@ export type PlayerState = {
   // states while playing
   budget: number;
   tileCount: number;
-  tiles?: Tile[]; // undefined if other player
+  tiles?: ArrayLike<Tile>; // undefined if other player
   disconnected: boolean;
 
   lastAction: {
     type: "pass" | "play" | "";
-    tiles: Tile[];
+    tiles: ArrayLike<Tile>;
   };
 };
 
 export type GameStatus = "waiting" | "starting" | "ongoing";
 
 export type GameState = {
-  players: PlayerState[];
+  players: ArrayLike<PlayerState>;
   currentPlayerIndex: number;
   status: GameStatus;
 };
 
 export const getLastHandPlayed = (state: GameState): Hand | null => {
-  const lastPlayActionIndex = state.players.findIndex(
+  const lastPlayActionIndex = Array.from(state.players).findIndex(
     (p) => p.lastAction.type === "play"
   );
   if (lastPlayActionIndex === -1) {
@@ -40,7 +40,7 @@ export const getLastHandPlayed = (state: GameState): Hand | null => {
 
   const topNumber = getTopNumber(state.players.length);
   return getHand(
-    state.players[lastPlayActionIndex].lastAction.tiles,
+    Array.from(state.players[lastPlayActionIndex].lastAction.tiles),
     topNumber
   );
 };
