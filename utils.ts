@@ -5,8 +5,7 @@ import {
   THREE_PLAYERS_TILES_PER_PLAYER,
   THREE_PLAYERS_TOP_NUMBER,
 } from "./constants";
-
-import { Tile } from "./tile";
+import { Tile, TileNumber } from "./tile";
 
 export const getPenalty = (tiles: Tile[]): number => {
   const basePenalty = tiles.length;
@@ -16,7 +15,7 @@ export const getPenalty = (tiles: Tile[]): number => {
   return basePenalty * multiplier;
 };
 
-export const getTopNumber = (playersCount: number): number => {
+export const getTopNumber = (playersCount: number): TileNumber => {
   switch (playersCount) {
     case 3:
       return THREE_PLAYERS_TOP_NUMBER;
