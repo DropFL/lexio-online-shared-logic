@@ -1,4 +1,7 @@
+import { Hand, getHand } from "./hand";
+
 import { Tile } from "./tile";
+import { getTopNumber } from "./utils";
 
 export type PlayerState = {
   id: string;
@@ -13,15 +16,10 @@ export type PlayerState = {
   tiles?: Tile[]; // undefined if other player
   disconnected: boolean;
 
-  lastAction:
-    | {
-        type: "pass";
-      }
-    | {
-        type: "play";
-        tiles: Tile[];
-      }
-    | null;
+  lastAction: {
+    type: "pass" | "play" | "";
+    tiles: Tile[];
+  };
 };
 
 export type GameStatus = "waiting" | "starting" | "ongoing";
@@ -29,17 +27,20 @@ export type GameStatus = "waiting" | "starting" | "ongoing";
 export type GameState = {
   players: PlayerState[];
   currentPlayerIndex: number;
-  lastPlayedPlayerIndex: number | null;
   status: GameStatus;
 };
 
-export const getLastTilesPlayed = (state: GameState): Tile[] | null => {
-  if (state.lastPlayedPlayerIndex === null) {
+export const getLastHandPlayed = (state: GameState): Hand | null => {
+  const lastPlayActionIndex = state.players.findIndex(
+    (p) => p.lastAction.type === "play"
+  );
+  if (lastPlayActionIndex === -1) {
     return null;
   }
-  const lastAction = state.players[state.lastPlayedPlayerIndex].lastAction;
-  if (lastAction?.type === "play") {
-    return lastAction.tiles;
-  }
-  return null;
+
+  const topNumber = getTopNumber(state.players.length);
+  return getHand(
+    state.players[lastPlayActionIndex].lastAction.tiles,
+    topNumber
+  );
 };
